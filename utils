@@ -1,0 +1,10 @@
+# horarios.py
+from datetime import datetime
+
+def gerar_horarios():
+    horarios = []
+    for hora in range(8,18):
+        horarios.append(f"{hora:02d}:00")
+        if hora < 17:
+            horarios.append(f"{hora:02d}:30")
+    return horarios
