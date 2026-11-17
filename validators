@@ -1,0 +1,7 @@
+# validators.py
+
+def validar_nome(nome):
+    return bool(nome and nome.strip())
+
+def validar_telefone(telefone):
+    return bool(telefone and telefone.strip())
