@@ -1,0 +1,35 @@
+# database.py
+import sqlite3
+from pathlib import Path
+
+DB_PATH = "database/salon.db"
+
+def get_connection():
+    return sqlite3.connect(DB_PATH, check_same_thread=False)
+
+def init_db():
+    Path("database").mkdir(exist_ok=True)
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.executescript("""
+        CREATE TABLE IF NOT EXISTS profissionais (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nome TEXT NOT NULL
+        );
+        CREATE TABLE IF NOT EXISTS servicos (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nome TEXT NOT NULL,
+            duracao INTEGER,
+            valor REAL
+        );
+        """)
+        conn.commit()
+
+def reset_database():
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.executescript("DELETE FROM profissionais; DELETE FROM servicos;")
+        conn.commit()
+
+def limpar_telefone(numero):
+    return ''.join(filter(str.isdigit, str(numero)))
